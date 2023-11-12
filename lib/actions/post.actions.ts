@@ -1,6 +1,14 @@
 import { db } from "@/firebase";
-import { getDocs, collection, query, orderBy } from "firebase/firestore";
+import {
+  getDocs,
+  collection,
+  query,
+  orderBy,
+  getDoc,
+  doc,
+} from "firebase/firestore";
 import { Post, postConverter } from "../converters/Post";
+import { firestore } from "../../firebase";
 
 export async function getAllPosts(): Promise<Post[]> {
   const postsCollection = collection(db, "posts");
@@ -18,6 +26,25 @@ export async function getAllPosts(): Promise<Post[]> {
     return posts;
   } catch (error) {
     console.error("Error fetching posts:", error);
+    throw error;
+  }
+}
+
+export async function getPostById(postId: string): Promise<Post | null> {
+  const postRef = doc(db, "posts", postId);
+
+  try {
+    const docSnapshot = await getDoc(postRef);
+
+    if (docSnapshot.exists()) {
+      const post = postConverter.fromFirestore(docSnapshot, {});
+      return post;
+    } else {
+      console.error("Post not found");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching post:", error);
     throw error;
   }
 }

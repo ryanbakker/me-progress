@@ -14,12 +14,13 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { Input } from "../ui/input";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { db } from "@/firebase";
+import MarkdownPreview from "../shared/MarkdownPreview";
 
 const postSchema = z.object({
   title: z.string(),
@@ -30,6 +31,7 @@ const postSchema = z.object({
 function PostForm() {
   const { data: session } = useSession();
   const router = useRouter();
+  const [postContent, setPostContent] = useState("");
 
   const form = useForm<z.infer<typeof postSchema>>({
     resolver: zodResolver(postSchema),
@@ -78,7 +80,7 @@ function PostForm() {
       const postsCollection = collection(db, "posts");
       addDoc(postsCollection, {
         title: values.title,
-        content: values.content,
+        content: postContent,
         image: imageUrl,
         user: session.user.id,
         timestamp: serverTimestamp(),
@@ -137,16 +139,20 @@ function PostForm() {
               <FormControl>
                 <Textarea
                   {...field}
-                  value={field.value || ""}
-                  autoComplete="off"
-                  onChange={(e) => field.onChange(e)}
-                  placeholder="Blog post content..."
+                  value={postContent}
+                  onChange={(e) => setPostContent(e.target.value)}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+
+        <div className="markdown-preview">
+          <h3>Content Preview</h3>
+
+          <MarkdownPreview markdown={postContent} />
+        </div>
 
         <div>
           <Button type="button" onClick={() => router.push("/")}>

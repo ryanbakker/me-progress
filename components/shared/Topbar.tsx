@@ -9,7 +9,7 @@ async function Topbar() {
   const session = await getServerSession(authOptions);
 
   return (
-    <header className="flex p-5 justify-center items-center">
+    <header className="flex py-6 px-8 justify-center items-center">
       <h1 className="text-xl mr-auto">meProgress</h1>
 
       <div className="flex gap-6 items-start justify-start">

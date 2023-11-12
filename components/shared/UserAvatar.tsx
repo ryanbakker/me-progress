@@ -17,8 +17,8 @@ const UserAvatar = ({
         <Image
           src={image}
           alt={name || "User Name"}
-          width={40}
-          height={40}
+          width={80}
+          height={80}
           className="rounded-full"
         />
       )}
