@@ -3,9 +3,7 @@ import React from "react";
 
 function page() {
   return (
-    <div>
-      <h2>Create Post</h2>
-
+    <div className="py-2 px-8 flex flex-col gap-8 max-w-[60rem] mx-auto">
       <PostForm />
     </div>
   );

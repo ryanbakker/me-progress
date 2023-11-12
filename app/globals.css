@@ -78,3 +78,124 @@
 .markdown-preview h1 {
   @apply text-3xl;
 }
+
+.post-blog-form input {
+  @apply ring-0 focus:ring-0  dark:border-0 focus:border-0;
+}
+
+.post-blog-form textarea {
+  @apply ring-0 focus:ring-0  dark:border-0;
+}
+
+.markdown-tips-container {
+  @apply relative;
+}
+
+.markdown-preview p {
+  @apply mt-6 px-4 py-2 bg-gray-100 text-gray-700 inline-block rounded-md;
+}
+
+.markdown-tips-list {
+  @apply flex flex-col w-full gap-1;
+}
+
+.markdown-tips-list li {
+  @apply flex flex-row min-w-[13rem];
+}
+
+.markdown-tips-list li p {
+  @apply mr-auto text-sm;
+}
+
+.markdown-tips-list li span {
+  @apply ml-auto tracking-widest text-center text-sm;
+}
+
+.markdown-tips-sheet-list {
+  @apply flex flex-col gap-2;
+}
+
+.markdown-tips-sheet-list li {
+  @apply flex flex-row border-t pt-2;
+}
+
+.markdown-tips-sheet-list li span {
+  @apply ml-auto;
+}
+
+.blog-post-content h1 {
+  @apply text-3xl py-[0.6rem] font-semibold;
+}
+
+.blog-post-content h2 {
+  @apply text-2xl py-[0.6rem] font-medium;
+}
+
+.blog-post-content h3 {
+  @apply text-xl py-[0.4rem] font-light;
+}
+
+.blog-post-content h4 {
+  @apply text-lg py-[0.4rem] font-medium;
+}
+
+.blog-post-content h5 {
+  color: #bbb;
+  position: relative;
+  display: inline-block;
+  padding: 0.4rem 0;
+  font-weight: 500;
+}
+
+.blog-post-content h5::after {
+  content: "";
+  position: absolute;
+  bottom: 0.3rem;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #bbb;
+  z-index: 1;
+}
+
+.blog-post-content h6 {
+  @apply text-gray-400 font-bold py-[0.4rem] uppercase;
+}
+
+.blog-post-content code {
+  font-family: monospace;
+  @apply tracking-wide;
+}
+
+.blog-post-content em {
+  font-weight: 300;
+}
+
+.blog-post-content blockquote {
+  color: #bbb;
+  position: relative;
+  display: inline-block;
+  margin: 0.4rem 0;
+  padding-left: 0.7rem;
+  font-weight: 300;
+}
+
+.blog-post-content blockquote::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 85%; /* Change this to 100% to make it as tall as the content */
+  width: 3px;
+  background-color: #bbb;
+  z-index: 1;
+}
+
+.blog-post-content ul {
+  list-style-type: disc;
+  padding-left: 0.8rem;
+}
+
+.blog-post-content hr {
+  @apply my-8 border-gray-500;
+}

@@ -9,7 +9,9 @@ const md = new Remarkable({
 });
 
 export default function MarkdownPreview({ markdown }: { markdown: string }) {
-  const renderedHTML = md.render(markdown);
+  const renderedHTML = markdown
+    ? md.render(markdown)
+    : "<p>Start typing to see the preview...</p>";
   return <div dangerouslySetInnerHTML={{ __html: renderedHTML }} />;
 }
 
