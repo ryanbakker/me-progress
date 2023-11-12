@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import DarkModeToggle from "./DarkModeToggle";
 import UserButton from "./UserButton";
 import NavMenu from "./NavMenu";
+import Link from "next/link";
 
 async function Topbar() {
   const session = await getServerSession(authOptions);
@@ -14,14 +15,18 @@ async function Topbar() {
       <div className="flex gap-6 items-start justify-start">
         <NavMenu />
 
-        <div className="flex gap-4">
+        <div className="flex gap-4 justify-center items-center">
           <DarkModeToggle />
-          <UserButton session={session} />
         </div>
         {session ? (
-          <p className="text-green-700 bg-green-300 px-4 py-2 rounded-md mt-auto">
-            Admin User
-          </p>
+          <ul className="flex gap-4 items-center justify-center">
+            <li>
+              <Link href="/create-post">Create Post</Link>
+            </li>
+            <li>
+              <UserButton session={session} />
+            </li>
+          </ul>
         ) : (
           <></>
         )}
