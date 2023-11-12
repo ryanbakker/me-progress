@@ -1,11 +1,23 @@
-// utils/firebase.ts
+import { db } from "@/firebase";
+import { getDocs, collection, query, orderBy } from "firebase/firestore";
+import { Post, postConverter } from "../converters/Post";
 
-import { collection, getDocs } from "firebase/firestore";
-import { firestore } from "../../firebase";
+export async function getAllPosts(): Promise<Post[]> {
+  const postsCollection = collection(db, "posts");
+  const postsQuery = query(postsCollection, orderBy("timestamp", "desc"));
 
-export const getBlogPosts = async () => {
-  const blogCollection = collection(firestore, "posts");
-  const snapshot = await getDocs(blogCollection);
-  const blogPosts = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  return blogPosts;
-};
+  try {
+    const querySnapshot = await getDocs(postsQuery);
+    const posts: Post[] = [];
+
+    querySnapshot.forEach((doc) => {
+      const post = postConverter.fromFirestore(doc, {});
+      posts.push(post);
+    });
+
+    return posts;
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    throw error;
+  }
+}

@@ -25,7 +25,7 @@ export interface Post {
   user: User;
 }
 
-const postConverter: FirestoreDataConverter<Post> = {
+export const postConverter: FirestoreDataConverter<Post> = {
   toFirestore: function (post: Post): DocumentData {
     return {
       title: post.title,
@@ -55,6 +55,3 @@ const postConverter: FirestoreDataConverter<Post> = {
 
 export const postsRef = (postId: string) =>
   collection(db, "posts", postId, "posts").withConverter(postConverter);
-
-export const sortedPostsRef = (postId: string) =>
-  query(postsRef(postId), orderBy("timestamp", "desc"));

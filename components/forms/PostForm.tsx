@@ -18,8 +18,6 @@ import { ChangeEvent } from "react";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { postsRef } from "@/lib/converters/Post";
-import { User } from "next-auth";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { db } from "@/firebase";
 
