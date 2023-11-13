@@ -91,8 +91,12 @@
   @apply relative;
 }
 
-.markdown-preview p {
+.markdown-preview span {
   @apply mt-6 px-4 py-2 bg-gray-100 text-gray-700 inline-block rounded-md;
+}
+
+.markdown-preview p {
+  @apply py-4;
 }
 
 .markdown-tips-list {
@@ -139,8 +143,12 @@
   @apply text-lg py-[0.4rem] font-medium;
 }
 
+.blog-post-content p {
+  @apply py-4;
+}
+
 .blog-post-content h5 {
-  color: #bbb;
+  color: #9f9f9f;
   position: relative;
   display: inline-block;
   padding: 0.4rem 0;
@@ -154,7 +162,7 @@
   left: 0;
   height: 2px;
   width: 100%;
-  background-color: #bbb;
+  background-color: #9f9f9f;
   z-index: 1;
 }
 
@@ -172,22 +180,22 @@
 }
 
 .blog-post-content blockquote {
-  color: #bbb;
+  @apply text-slate-600 dark:text-slate-300;
   position: relative;
   display: inline-block;
-  margin: 0.4rem 0;
+  margin: 2rem 0;
   padding-left: 0.7rem;
   font-weight: 300;
 }
 
 .blog-post-content blockquote::before {
+  @apply bg-slate-600 dark:bg-slate-300;
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   height: 85%; /* Change this to 100% to make it as tall as the content */
   width: 3px;
-  background-color: #bbb;
   z-index: 1;
 }
 

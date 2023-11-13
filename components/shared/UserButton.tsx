@@ -29,7 +29,10 @@ const UserButton = ({ session }: { session: Session | null }) => {
     session && (
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <UserAvatar name={session.user?.name} image={session.user?.image} />
+          <UserAvatar
+            image={session.user?.image}
+            className="flex items-center justify-center"
+          />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>{session.user?.name}</DropdownMenuLabel>

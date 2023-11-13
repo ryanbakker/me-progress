@@ -7,15 +7,17 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { multiFormatDateString } from "@/lib/utils";
 import { markdownToHtml } from "@/components/shared/MarkdownPreview";
-import UserAvatar from "@/components/shared/UserAvatar";
-import { Session, getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
+import Loader from "@/components/shared/Loader";
+import { deleteDoc, doc } from "firebase/firestore";
+import { useRouter } from "next/navigation";
+import { db } from "@/firebase";
 
 function Page({ params }: { params: { id: string } }) {
   const postId = params.id;
   const [currentPost, setCurrentPost] = useState<Post | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [htmlContent, setHtmlContent] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,33 +64,82 @@ function Page({ params }: { params: { id: string } }) {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      if (currentPost && currentPost.id) {
+        const postDocRef = doc(db, "posts", currentPost.id);
+        await deleteDoc(postDocRef);
+        console.log("Post deleted successfully");
+        router.push("/"); // Redirect to the home page after deletion
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
+
   if (!currentPost) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (
-    <div className="flex flex-row flex-wrap mt-8 gap-6 w-full max-w-[90%] mx-auto bg-slate-700 min-h-full rounded-t-2xl pb-10">
-      <div className="rounded-lg w-screen flex flex-col object-center">
-        <div className="overflow-hidden w-full object-center flex justify-center items-center min-h-[24rem]  max-h-[40rem]">
-          {imageUrl && (
+    <div className="flex flex-row flex-wrap mt-8 gap-6 w-full max-w-[90%] mx-auto bg-slate-200 dark:bg-slate-700 min-h-full rounded-t-2xl pb-10">
+      <div className="rounded-lg w-screen flex flex-col object-center overflow-hidden h-full">
+        <div className="overflow-hidden w-full object-center flex justify-center items-center object-fill max-h-[30rem] ">
+          {imageUrl ? (
             <Image
               src={imageUrl}
               alt="Post Hero"
-              width={800}
-              height={800}
+              width={700}
+              height={700}
               priority
-              className="object-fill w-full h-auto rounded-t-2xl object-center  max-h-[30rem] "
+              className="object-fill w-full h-full rounded-t-2xl object-center overflow-hidden"
             />
+          ) : (
+            <div className="w-full h-[28rem] flex items-center justify-center">
+              <Loader />
+            </div>
           )}
         </div>
 
-        <div className="p-14 flex flex-col gap-2 w-full flex-1 max-w-5xl mx-auto">
-          <h2 className="text-4xl font-medium">{currentPost.title}</h2>
+        <div className="p-14 flex flex-col gap-2 w-full flex-1 max-w-5xl lg:max-w-6xl mx-auto">
+          <div className="flex flex-wrap mb-6 gap-x-6">
+            <div>
+              <h2 className="text-4xl font-medium text-slate-950 dark:text-slate-50">
+                {currentPost.title}
+              </h2>
 
-          <p className="font-light text-xs mt-auto pt-4 text-gray-300 pb-10">
-            Posted &nbsp;– &nbsp;
-            {multiFormatDateString(currentPost.timestamp.toDateString())}
-          </p>
+              <p className="font-light text-xs mt-auto pt-4 text-gray-500 dark:text-gray-300 pb-10">
+                Posted &nbsp;– &nbsp;
+                {multiFormatDateString(currentPost.timestamp.toDateString())}
+              </p>
+            </div>
+            <div className="gap-2 inline-flex xl:ml-auto items-start">
+              <button className="flex gap-2 items-center justify-center bg-slate-600 px-6 py-2 rounded-md hover:bg-slate-500 transition-all text-white">
+                Edit
+                <Image
+                  src="/assets/icons/edit.svg"
+                  alt="edit"
+                  height={15}
+                  width={15}
+                  className="invert"
+                />
+              </button>
+              <button
+                className="flex gap-2 items-center justify-center bg-red-700 px-6 py-2 rounded-md text-white hover:bg-red-600 transition-all"
+                onClick={handleDelete}
+              >
+                Delete
+                <Image
+                  src="/assets/icons/delete.svg"
+                  alt="edit"
+                  height={15}
+                  width={15}
+                  className="invert"
+                />
+              </button>
+            </div>
+          </div>
+
           <section
             className="blog-post-content"
             dangerouslySetInnerHTML={{ __html: htmlContent || "" }}

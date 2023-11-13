@@ -24,14 +24,6 @@ import MarkdownPreview from "../shared/MarkdownPreview";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "../ui/sheet";
 
 const postSchema = z.object({
   title: z.string(),
@@ -113,7 +105,7 @@ function PostForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="post-blog-form flex flex-col gap-6 mt-10 mb-28"
+        className="post-blog-form flex flex-col mt-10 mb-28"
       >
         <div className="flex gap-6 items-top lg:gap-20">
           <div className="flex-1 flex flex-col gap-6 pt-8">
@@ -190,85 +182,10 @@ function PostForm() {
           <div className="flex flex-col gap-2">
             <h3 className="m-0 p-0 text-xl font-medium">Content</h3>
             <div className="relative min-w-[50rem] !max-w-full">
-              <Sheet>
-                <SheetTrigger className="text-xs font-light m-0 p-0">
-                  Markdown Tips Sheet
-                </SheetTrigger>
-                <SheetContent>
-                  <SheetHeader>
-                    <SheetTitle>Markdown Tips</SheetTitle>
-                    <SheetDescription>
-                      <ul className="markdown-tips-sheet-list">
-                        <li>
-                          <p>Header 1</p>
-                          <span># text</span>
-                        </li>
-                        <li>
-                          <p>Header 2</p>
-                          <span>## text</span>
-                        </li>
-                        <li>
-                          <p>Header 3</p>
-                          <span>### text</span>
-                        </li>
-                        <li>
-                          <p>Header 4</p>
-                          <span>#### text</span>
-                        </li>
-                        <li>
-                          <p>Header 5</p>
-                          <span>##### text</span>
-                        </li>
-                        <li>
-                          <p>Header 6</p>
-                          <span>###### text</span>
-                        </li>
-                        <li>
-                          <p>Bold</p>
-                          <span>**text**</span>
-                        </li>
-                        <li>
-                          <p>Italic</p>
-                          <span>*text*</span>
-                        </li>
-                        <li>
-                          <p>Strikethrough</p>
-                          <span>~~text~~</span>
-                        </li>
-                        <li>
-                          <p>Inline Code</p>
-                          <span>`text`</span>
-                        </li>
-                        <li>
-                          <p>Blockquote</p>
-                          <span>&rsaquo; text</span>
-                        </li>
-                        <li>
-                          <p>List</p>
-                          <span>- text</span>
-                        </li>
-                        <li>
-                          <p>Link</p>
-                          <span>[text](link)</span>
-                        </li>
-                        <li>
-                          <p>Image</p>
-                          <span>![alt text](url)</span>
-                        </li>
-                        <li>
-                          <p>Divide</p>
-                          <span>---</span>
-                        </li>
-                      </ul>
-                    </SheetDescription>
-                  </SheetHeader>
-                </SheetContent>
-              </Sheet>
-
               <Popover>
                 <PopoverTrigger className="flex justify-start">
-                  <span className="text-xs font-light m-0 p-0">
-                    Markdown Tips Popover
+                  <span className="text-xs font-light m-0 p-0 hover:underline underline-offset-2 text-gray-500 hover:text-gray-900">
+                    Markdown Tips
                   </span>
                 </PopoverTrigger>
                 <PopoverContent className="ml-8 bg-gray-100 w-full">
@@ -359,7 +276,7 @@ function PostForm() {
                         {...field}
                         value={postContent}
                         onChange={(e) => setPostContent(e.target.value)}
-                        className="resize-none min-h-[15rem] overflow-scroll"
+                        className="resize-none min-h-[30rem] overflow-scroll"
                       />
                     </FormControl>
                     <FormMessage />
@@ -368,20 +285,23 @@ function PostForm() {
               />
             </TabsContent>
             <TabsContent value="preview" className="markdown-preview">
-              <MarkdownPreview markdown={postContent} />
+              <div className="p-8 border-slate-300 bg-gray-50 border rounded-lg max-h-[30rem] overflow-scroll">
+                <MarkdownPreview markdown={postContent} />
+              </div>
             </TabsContent>
           </Tabs>
         </div>
 
-        <div className="flex gap-4 mt-4">
+        <div className="flex gap-4 mt-10">
           <Button
             type="button"
             variant="outline"
             onClick={() => router.push("/")}
+            className="px-6"
           >
             Cancel
           </Button>
-          <Button type="submit" className="px-8">
+          <Button type="submit" className="px-10">
             Post
           </Button>
         </div>
