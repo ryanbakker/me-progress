@@ -1,6 +1,21 @@
 "use client";
 
 import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { ChangeEvent, useEffect, useState } from "react";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { db } from "@/firebase";
+import Image from "next/image";
 import {
   Form,
   FormControl,
@@ -8,34 +23,33 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { Input } from "../ui/input";
-import { ChangeEvent, useState } from "react";
-import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { db } from "@/firebase";
-import MarkdownPreview from "../shared/MarkdownPreview";
-import Image from "next/image";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import MarkdownPreview from "@/components/shared/MarkdownPreview";
+import { Button } from "@/components/ui/button";
+import { getPostById } from "@/lib/actions/post.actions";
 
 const postSchema = z.object({
-  title: z.string().nonempty({ message: "You must have a title!" }),
-  content: z.string().nonempty({ message: "You must have post content!" }),
-  image: z.string().nonempty({ message: "You must have an image!" }),
+  title: z.string(),
+  content: z.string(),
+  image: z.string(),
 });
 
-function PostForm() {
+function EditPost({ params }: { params: string }) {
   const { data: session } = useSession();
   const router = useRouter();
   const [postContent, setPostContent] = useState("");
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+  const [existingPost, setExistingPost] = useState<any>(null);
+
+  const postId = params;
 
   const form = useForm<z.infer<typeof postSchema>>({
     resolver: zodResolver(postSchema),
@@ -45,6 +59,37 @@ function PostForm() {
       image: "",
     },
   });
+
+  // Fetch existing post data when component mounts
+  useEffect(() => {
+    const fetchExistingPost = async () => {
+      try {
+        // Fetch existing post data based on postId
+        const postData = await getPostById(postId); // Implement this function
+
+        if (postData) {
+          // Set existing post data to state
+          setExistingPost(postData);
+
+          // Populate form fields with existing post data
+          form.setValue("title", postData.title);
+          form.setValue("content", postData.content);
+          form.setValue("image", postData.image);
+
+          // Display image preview if image exists
+          if (postData.image) {
+            setImagePreviewUrl(postData.image);
+          }
+        } else {
+          console.error("Post not found");
+        }
+      } catch (error) {
+        console.error("Error fetching post:", error);
+      }
+    };
+
+    fetchExistingPost();
+  }, [postId, form]);
 
   const handleImage = (
     e: ChangeEvent<HTMLInputElement>,
@@ -85,12 +130,12 @@ function PostForm() {
       const imageUrl = `gs://meprogress-54172.appspot.com/images/${values.image}`;
       console.log("Image Url: ", imageUrl);
 
-      const postsCollection = collection(db, "posts");
-      addDoc(postsCollection, {
+      // Update existing post data instead of creating a new post
+      const postRef = doc(db, "posts", postId);
+      await updateDoc(postRef, {
         title: values.title,
         content: postContent,
         image: imageUrl,
-        user: session.user.id,
         timestamp: serverTimestamp(),
       });
 
@@ -110,12 +155,12 @@ function PostForm() {
         <div className="flex gap-6 items-top lg:gap-20">
           <div className="flex-1 flex flex-col gap-6 pt-8">
             <h2 className="text-3xl font-semibold">Create Post</h2>
-            <h3 className="text-xl font-medium pb-0 mb-0">Title</h3>
             <FormField
               control={form.control}
               name="title"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel className="text-xl font-medium">Title</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -296,13 +341,13 @@ function PostForm() {
           <Button
             type="button"
             variant="outline"
-            onClick={() => router.back()}
+            onClick={() => router.push("/")}
             className="px-6"
           >
             Cancel
           </Button>
           <Button type="submit" className="px-10">
-            Post
+            Update
           </Button>
         </div>
       </form>
@@ -310,4 +355,4 @@ function PostForm() {
   );
 }
 
-export default PostForm;
+export default EditPost;

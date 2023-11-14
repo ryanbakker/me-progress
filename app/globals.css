@@ -75,10 +75,6 @@
   }
 }
 
-.markdown-preview h1 {
-  @apply text-3xl;
-}
-
 .post-blog-form input {
   @apply ring-0 focus:ring-0  dark:border-0 focus:border-0;
 }
@@ -89,14 +85,6 @@
 
 .markdown-tips-container {
   @apply relative;
-}
-
-.markdown-preview span {
-  @apply mt-6 px-4 py-2 bg-gray-100 text-gray-700 inline-block rounded-md;
-}
-
-.markdown-preview p {
-  @apply py-4;
 }
 
 .markdown-tips-list {
@@ -115,38 +103,36 @@
   @apply ml-auto tracking-widest text-center text-sm;
 }
 
-.markdown-tips-sheet-list {
-  @apply flex flex-col gap-2;
+.markdown-preview span {
+  @apply mt-6 px-4 py-2 bg-gray-100 text-gray-700 inline-block rounded-md;
 }
 
-.markdown-tips-sheet-list li {
-  @apply flex flex-row border-t pt-2;
-}
-
-.markdown-tips-sheet-list li span {
-  @apply ml-auto;
-}
-
+.markdown-preview h1,
 .blog-post-content h1 {
   @apply text-3xl py-[0.6rem] font-semibold;
 }
 
+.markdown-preview h2,
 .blog-post-content h2 {
   @apply text-2xl py-[0.6rem] font-medium;
 }
 
+.markdown-preview h3,
 .blog-post-content h3 {
   @apply text-xl py-[0.4rem] font-light;
 }
 
+.markdown-preview h4,
 .blog-post-content h4 {
   @apply text-lg py-[0.4rem] font-medium;
 }
 
+.markdown-preview p,
 .blog-post-content p {
   @apply py-4;
 }
 
+.markdown-preview h5,
 .blog-post-content h5 {
   color: #9f9f9f;
   position: relative;
@@ -155,6 +141,7 @@
   font-weight: 500;
 }
 
+.markdown-preview h5::after,
 .blog-post-content h5::after {
   content: "";
   position: absolute;
@@ -166,19 +153,23 @@
   z-index: 1;
 }
 
+.markdown-preview h6,
 .blog-post-content h6 {
   @apply text-gray-400 font-bold py-[0.4rem] uppercase;
 }
 
+.markdown-preview code,
 .blog-post-content code {
   font-family: monospace;
   @apply tracking-wide;
 }
 
+.markdown-preview em,
 .blog-post-content em {
   font-weight: 300;
 }
 
+.markdown-preview blockquote,
 .blog-post-content blockquote {
   @apply text-slate-600 dark:text-slate-300;
   position: relative;
@@ -188,6 +179,7 @@
   font-weight: 300;
 }
 
+.markdown-preview blockquote::before,
 .blog-post-content blockquote::before {
   @apply bg-slate-600 dark:bg-slate-300;
   content: "";
@@ -199,11 +191,13 @@
   z-index: 1;
 }
 
+.markdown-preview ul,
 .blog-post-content ul {
   list-style-type: disc;
   padding-left: 0.8rem;
 }
 
+.markdown-preview hr,
 .blog-post-content hr {
   @apply my-8 border-gray-500;
 }

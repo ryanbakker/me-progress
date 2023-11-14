@@ -5,6 +5,7 @@ import FirebaseAuthProvider from "@/components/providers/FirebaseAuthProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import Topbar from "@/components/shared/Topbar";
 import { Rubik } from "next/font/google";
+import ToasterComponent from "@/components/providers/ToasterComponent";
 
 export const metadata: Metadata = {
   title: "meProgress",
@@ -35,6 +36,7 @@ export default function RootLayout({
             >
               <Topbar />
               {children}
+              <ToasterComponent />
             </ThemeProvider>
           </FirebaseAuthProvider>
         </body>

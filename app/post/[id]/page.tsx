@@ -11,6 +11,8 @@ import Loader from "@/components/shared/Loader";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { db } from "@/firebase";
+import { useToast } from "@/components/ui/use-toast";
+import Link from "next/link";
 
 function Page({ params }: { params: { id: string } }) {
   const postId = params.id;
@@ -18,6 +20,7 @@ function Page({ params }: { params: { id: string } }) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [htmlContent, setHtmlContent] = useState<string | null>(null);
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,9 +74,33 @@ function Page({ params }: { params: { id: string } }) {
         await deleteDoc(postDocRef);
         console.log("Post deleted successfully");
         router.push("/"); // Redirect to the home page after deletion
+
+        return toast({
+          title: "Post deleted successfully!",
+        });
       }
     } catch (error) {
       console.error("Error deleting post:", error);
+    }
+  };
+
+  const handleShareLink = async () => {
+    try {
+      if (currentPost && currentPost.id) {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+        const shareLink = `${baseUrl}/post/${currentPost.id}`;
+
+        // Copy share link to clipboard
+        await navigator.clipboard.writeText(shareLink);
+
+        toast({
+          title: "Link copied to clipboard!",
+          className:
+            "bg-slate-800 text-white border border-slate-200 font-medium dark:bg-slate-200 dark:text-slate-900 dark:border-slate-800",
+        });
+      }
+    } catch (error) {
+      console.error("Error copying link to clipboard: ", error);
     }
   };
 
@@ -82,8 +109,8 @@ function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="flex flex-row flex-wrap mt-8 gap-6 w-full max-w-[90%] mx-auto bg-slate-200 dark:bg-slate-700 min-h-full rounded-t-2xl pb-10">
-      <div className="rounded-lg w-screen flex flex-col object-center overflow-hidden h-full">
+    <div className="flex flex-row flex-wrap mt-8 gap-6 w-full max-w-[90%] mx-auto bg-slate-100 dark:bg-slate-700 min-h-full rounded-t-2xl pb-10">
+      <div className="rounded-2xl w-screen flex flex-col object-center overflow-hidden h-full">
         <div className="overflow-hidden w-full object-center flex justify-center items-center object-fill max-h-[30rem] ">
           {imageUrl ? (
             <Image
@@ -92,7 +119,7 @@ function Page({ params }: { params: { id: string } }) {
               width={700}
               height={700}
               priority
-              className="object-fill w-full h-full rounded-t-2xl object-center overflow-hidden"
+              className="object-fill w-full h-full  object-center overflow-hidden"
             />
           ) : (
             <div className="w-full h-[28rem] flex items-center justify-center">
@@ -114,16 +141,32 @@ function Page({ params }: { params: { id: string } }) {
               </p>
             </div>
             <div className="gap-2 inline-flex xl:ml-auto items-start">
-              <button className="flex gap-2 items-center justify-center bg-slate-600 px-6 py-2 rounded-md hover:bg-slate-500 transition-all text-white">
+              <button
+                className="flex gap-2 items-center justify-center bg-slate-600 px-6 py-2 rounded-md hover:bg-slate-500 transition-all text-white dark:bg-slate-50 dark:text-slate-950 hover:dark:bg-slate-300"
+                onClick={handleShareLink}
+              >
+                Share
+                <Image
+                  src="/assets/icons/share.svg"
+                  alt="edit"
+                  height={15}
+                  width={15}
+                  className="invert dark:invert-0"
+                />
+              </button>
+              <Link
+                href={`/post/${currentPost.id}/edit`}
+                className="flex gap-2 items-center justify-center bg-slate-600 px-6 py-2 rounded-md hover:bg-slate-500 transition-all text-white dark:bg-slate-50 dark:text-slate-950 hover:dark:bg-slate-300"
+              >
                 Edit
                 <Image
                   src="/assets/icons/edit.svg"
                   alt="edit"
                   height={15}
                   width={15}
-                  className="invert"
+                  className="invert dark:invert-0"
                 />
-              </button>
+              </Link>
               <button
                 className="flex gap-2 items-center justify-center bg-red-700 px-6 py-2 rounded-md text-white hover:bg-red-600 transition-all"
                 onClick={handleDelete}
