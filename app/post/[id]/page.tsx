@@ -195,7 +195,7 @@ function Page({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="flex flex-row flex-wrap mt-8 gap-6 w-full max-w-[90%] mx-auto bg-slate-100 dark:bg-slate-700 min-h-full rounded-t-2xl pb-10">
+    <div className="flex flex-row flex-wrap mt-8 gap-6 w-full max-w-none md:max-w-[90%] mx-auto bg-slate-100 dark:bg-slate-700 min-h-full rounded-t-2xl pb-10">
       <div className="rounded-2xl w-screen flex flex-col object-center overflow-hidden h-full">
         <div className="overflow-hidden w-full object-center flex justify-center items-center object-fill max-h-[30rem] ">
           {imageUrl ? (
@@ -214,7 +214,7 @@ function Page({ params }: { params: { id: string } }) {
           )}
         </div>
 
-        <div className="p-14 flex flex-col gap-2 w-full flex-1 max-w-5xl lg:max-w-6xl mx-auto">
+        <div className="py-14 px-6 md:px-14 flex flex-col gap-2 w-full flex-1 max-w-5xl lg:max-w-6xl mx-auto">
           <div className="flex flex-wrap mb-6 gap-x-6">
             <div>
               <h2 className="text-4xl font-medium text-slate-950 dark:text-slate-50">

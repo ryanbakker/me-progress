@@ -75,6 +75,11 @@
   }
 }
 
+.disable-scroll {
+  height: 100%;
+  overflow: hidden !important;
+}
+
 .blog-single-post .skeleton,
 .blog-all-posts .skeleton {
   @apply bg-slate-400 dark:bg-slate-500;
@@ -205,4 +210,154 @@
 .markdown-preview hr,
 .blog-post-content hr {
   @apply my-8 border-gray-500;
+}
+
+.hamburger_icon {
+  display: block;
+  z-index: 200;
+  margin-left: auto;
+  width: 24px;
+  height: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transform: rotate(180deg);
+  z-index: 9999;
+}
+
+.hamburger_line {
+  @apply bg-slate-700 dark:bg-white;
+  display: block;
+  position: relative;
+  height: 3px;
+  border-radius: 1em;
+  margin-bottom: 6px;
+  transition: all 1s ease-in-out;
+}
+
+.hamburger_icon_line_top {
+  width: 80%;
+  transition: width 0.3s ease-in-out;
+}
+
+.hamburger_icon_line_middle {
+  width: 100%;
+  transition: width 0.3s ease-in-out;
+}
+
+.hamburger_icon_line_bottom {
+  width: 60%;
+  transition: width 0.3s ease-in-out;
+}
+
+.hamburger_active .hamburger_icon_line_top,
+.hamburger_active .hamburger_icon_line_bottom {
+  width: 100%;
+}
+
+.hamburger_active .hamburger_icon_line_middle {
+  width: 50%;
+}
+
+.mobile_link_lg {
+  font-size: 20px;
+}
+
+.menu_container_backdrop {
+  position: fixed;
+  z-index: 80;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(2, 2, 2);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.backdrop-open {
+  opacity: 0.5;
+}
+
+.backdrop-closed {
+  opacity: 0;
+}
+
+.menu_container {
+  position: fixed;
+  z-index: 90;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding-top: 10rem;
+}
+
+.menu_container ul {
+  flex-direction: column;
+}
+
+.menu-open {
+  right: 0;
+  animation: mobileAnimation 0.6s ease;
+}
+
+.menu-closed {
+  right: -100%;
+  animation: mobileAnimationClosed 0.3s ease;
+}
+
+.backdrop-open {
+  right: 0;
+  animation: mobileBackdropOpen 0.3s ease;
+}
+
+.backdrop-closed {
+  right: -100%;
+  animation: mobileBackdropClosed 0.6s ease;
+}
+
+@keyframes mobileAnimation {
+  0% {
+    right: -100%;
+  }
+
+  100% {
+    right: 0;
+  }
+}
+
+@keyframes mobileAnimationClosed {
+  0% {
+    right: 0;
+  }
+
+  100% {
+    right: -100%;
+  }
+}
+
+@keyframes mobileBackdropOpen {
+  0% {
+    right: -100%;
+  }
+
+  100% {
+    right: 0;
+  }
+}
+
+@keyframes mobileBackdropClosed {
+  0% {
+    right: 0;
+  }
+
+  100% {
+    right: -100%;
+  }
 }

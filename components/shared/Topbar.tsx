@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import SignInButton from "./SignInButton";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import HamburgerMenu from "./HamburgerMenu";
 
 async function Topbar() {
   const session = await getServerSession(authOptions);
@@ -15,15 +16,15 @@ async function Topbar() {
   const isAdmin = sessionUser === adminUser;
 
   return (
-    <header className="flex py-6 px-8 justify-center items-center bg-white dark:bg-neutral-950 shadow-md">
+    <header className="flex py-6 px-4 lg:px-8 justify-center items-center bg-white dark:bg-neutral-950 shadow-md">
       <Link href="/" className="mr-auto">
-        <h1 className="text-2xl font-rubik tracking-tighter mr-4">
+        <h1 className="text-2xl font-rubik tracking-tighter">
           me<span className="text-red-500 font-extralight">|</span>
           Progress
         </h1>
       </Link>
 
-      <div className="flex gap-4 items-center justify-center">
+      <div className="hidden md:flex gap-4 items-center justify-center">
         <NavMenu />
 
         <div className="flex justify-center items-center">
@@ -48,6 +49,9 @@ async function Topbar() {
             <SignInButton />
           </div>
         )}
+      </div>
+      <div className="md:hidden">
+        <HamburgerMenu />
       </div>
     </header>
   );

@@ -33,3 +33,31 @@ export const whereLinks = [
     description: "Get in touch and view experience on my profile.",
   },
 ];
+
+export const mobileLinks = [
+  {
+    route: "/",
+    name: "home",
+    label: "Home",
+  },
+  {
+    route: "https://github.com/ryanbakker/me-progress",
+    name: "blog",
+    label: "Blog Repo",
+  },
+  {
+    route: "https://github.com/ryanbakker",
+    name: "github",
+    label: "GitHub Profile",
+  },
+  {
+    route: "https://ryanbakker.vercel.app",
+    name: "portfolio",
+    label: "Portfolio",
+  },
+  {
+    route: "https://linkedin.com/in/ryanbakker",
+    name: "linkedin",
+    label: "LinkedIn",
+  },
+];
