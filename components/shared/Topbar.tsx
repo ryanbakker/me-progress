@@ -9,6 +9,10 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 async function Topbar() {
   const session = await getServerSession(authOptions);
+  const sessionUser = session?.user.email;
+  const adminUser = process.env.ADMIN_EMAIL;
+
+  const isAdmin = sessionUser === adminUser;
 
   return (
     <header className="flex py-6 px-8 justify-center items-center bg-white dark:bg-neutral-950 shadow-md">
@@ -28,11 +32,13 @@ async function Topbar() {
 
         {session ? (
           <ul className="flex gap-4 items-center justify-center">
-            <li>
-              <Link href="/create-post">
-                <Button>Create Post</Button>
-              </Link>
-            </li>
+            {isAdmin && (
+              <li>
+                <Link href="/create-post">
+                  <Button>Create Post</Button>
+                </Link>
+              </li>
+            )}
             <li className="flex items-center justify-center">
               <UserButton session={session} />
             </li>
