@@ -13,16 +13,23 @@ import { Remarkable } from "remarkable";
 function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadingImages, setLoadingImages] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        console.log("Fetching posts...");
         setLoading(true);
+        setLoadingImages(true);
+
         const allPosts = await getAllPosts();
+        console.log("Posts fetched:", allPosts);
+
         setPosts(allPosts);
 
         const imageUrlPromises = allPosts.map(async (post) => {
+          setLoadingImages(true);
           const imageUrl = post.image ? await getImageUrl(post.image) : null;
           return imageUrl;
         });
@@ -33,6 +40,7 @@ function BlogPage() {
         );
 
         setLoading(false);
+        setLoadingImages(false);
       } catch (error) {
         console.error("Error fetching posts:", error);
         setLoading(false);
@@ -47,6 +55,7 @@ function BlogPage() {
       const storage = getStorage();
       const imageRef = ref(storage, imagePath);
       const imageUrl = await getDownloadURL(imageRef);
+
       return imageUrl;
     } catch (error) {
       console.error("Error getting image URL:", error);
@@ -67,28 +76,25 @@ function BlogPage() {
   return (
     <div className="flex flex-row flex-wrap mt-8 gap-6 justify-center">
       {loading ? (
-        <Loader />
+        <div>
+          <Loader />
+        </div>
       ) : (
         <>
           {posts.map((post, index) => (
             <Link
               key={post.id}
               href={`/post/${post.id}`}
-              className="bg-slate-200 dark:bg-slate-700 rounded-lg w-[23rem] flex flex-col"
+              className="bg-slate-200 dark:bg-slate-700 rounded-lg w-[23rem] flex flex-col hover:bg-slate-300 hover:dark:bg-slate-600 transition-all"
             >
-              <div className="overflow-hidden h-[16rem]">
-                {imageUrls[index] !== undefined ? (
-                  <Image
-                    src={imageUrls[index]}
-                    alt="Post Hero"
-                    width={200}
-                    height={200}
-                    priority
-                    className="object-cover w-full h-full rounded-t-lg object-center overflow-hidden"
-                  />
+              <div className="overflow-hidden h-[16rem] relative">
+                {loadingImages ? (
+                  <div className="flex items-center justify-center h-full z-20">
+                    <Loader />
+                  </div>
                 ) : (
                   <Image
-                    src="/assets/icons/placeholder.svg"
+                    src={imageUrls[index] || "/assets/icons/placeholder.svg"}
                     alt="Post Hero"
                     width={200}
                     height={200}
@@ -107,11 +113,6 @@ function BlogPage() {
                 </p>
                 <div className="font-light text-xs mt-auto pt-4">
                   <p>{multiFormatDateString(post.timestamp.toDateString())}</p>
-                  <button>
-                    {/* <Image
-                    
-                    /> */}
-                  </button>
                 </div>
               </div>
             </Link>

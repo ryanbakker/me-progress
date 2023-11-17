@@ -76,7 +76,7 @@
 }
 
 .post-blog-form input {
-  @apply ring-0 focus:ring-0  dark:border-0 focus:border-0;
+  @apply ring-0 focus:ring-0  dark:border-0;
 }
 
 .post-blog-form textarea {

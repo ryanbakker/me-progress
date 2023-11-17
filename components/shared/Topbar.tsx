@@ -5,6 +5,7 @@ import UserButton from "./UserButton";
 import NavMenu from "./NavMenu";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import SignInButton from "./SignInButton";
 
 async function Topbar() {
   const session = await getServerSession(authOptions);
@@ -24,6 +25,7 @@ async function Topbar() {
         <div className="flex justify-center items-center">
           <DarkModeToggle />
         </div>
+
         {session ? (
           <ul className="flex gap-4 items-center justify-center">
             <li>
@@ -36,7 +38,9 @@ async function Topbar() {
             </li>
           </ul>
         ) : (
-          <></>
+          <div>
+            <SignInButton />
+          </div>
         )}
       </div>
     </header>

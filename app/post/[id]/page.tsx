@@ -105,7 +105,11 @@ function Page({ params }: { params: { id: string } }) {
   };
 
   if (!currentPost) {
-    return <Loader />;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader />
+      </div>
+    );
   }
 
   return (

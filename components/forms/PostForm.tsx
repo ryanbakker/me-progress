@@ -27,7 +27,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 const postSchema = z.object({
   title: z.string().nonempty({ message: "You must have a title!" }),
-  content: z.string().nonempty({ message: "You must have post content!" }),
+  content: z.string(),
   image: z.string().nonempty({ message: "You must have an image!" }),
 });
 

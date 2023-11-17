@@ -31,7 +31,7 @@ const UserButton = ({ session }: { session: Session | null }) => {
         <DropdownMenuTrigger>
           <UserAvatar
             image={session.user?.image}
-            className="flex items-center justify-center"
+            className="flex items-center justify-center active:ring-0 active:border-0 active:outline-none"
           />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -39,7 +39,10 @@ const UserButton = ({ session }: { session: Session | null }) => {
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem onClick={() => signOut()}>
+          <DropdownMenuItem
+            onClick={() => signOut()}
+            className="cursor-pointer"
+          >
             Sign Out
           </DropdownMenuItem>
         </DropdownMenuContent>

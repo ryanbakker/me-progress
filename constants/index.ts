@@ -30,6 +30,6 @@ export const whereLinks = [
     iconPath: "/assets/icons/meProgressLinkedin.svg",
     route: "https://linkedin.com/in/ryanbakker",
     title: "LinkedIn",
-    description: "Get in touch and view experience on my LinkedIn profile.",
+    description: "Get in touch and view experience on my profile.",
   },
 ];
