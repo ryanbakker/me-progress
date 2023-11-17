@@ -105,9 +105,9 @@ function PostForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="post-blog-form flex flex-col mt-10 mb-28"
+        className="post-blog-form flex flex-col mt-10 mb-28 max-w-[90vw]"
       >
-        <div className="flex gap-6 items-top lg:gap-20">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-6 items-top lg:gap-20">
           <div className="flex-1 flex flex-col gap-6 pt-8">
             <h2 className="text-3xl font-semibold">Create Post</h2>
             <h3 className="text-xl font-medium pb-0 mb-0">Title</h3>
@@ -130,7 +130,7 @@ function PostForm() {
             />
           </div>
 
-          <div className="ml-auto">
+          <div className="md:ml-auto mb-8 md:mb-0">
             <FormField
               control={form.control}
               name="image"
@@ -144,7 +144,7 @@ function PostForm() {
                           alt="Uplaod Preview"
                           width={350}
                           height={100}
-                          className="overflow-hidden object-cover h-[15rem] rounded-lg"
+                          className="overflow-hidden object-cover md:h-[15rem] rounded-lg"
                         />
                       </div>
                     ) : (
@@ -189,7 +189,7 @@ function PostForm() {
                   </span>
                 </PopoverTrigger>
                 <PopoverContent className="ml-8 bg-gray-100 w-full">
-                  <div className="markdown-tips-container flex gap-8">
+                  <div className="markdown-tips-container hidden md:flex gap-8">
                     <ul className="markdown-tips-list">
                       <li>
                         <p>Header 1</p>
@@ -256,6 +256,71 @@ function PostForm() {
                       </li>
                     </ul>
                   </div>
+                  <div className="markdown-tips-container-mobile flex md:hidden gap-8">
+                    <ul className="markdown-tips-list">
+                      <li>
+                        <p>Header 1</p>
+                        <span># text</span>
+                      </li>
+                      <li>
+                        <p>Header 2</p>
+                        <span>## text</span>
+                      </li>
+                      <li>
+                        <p>Header 3</p>
+                        <span>### text</span>
+                      </li>
+                      <li>
+                        <p>Header 4</p>
+                        <span>#### text</span>
+                      </li>
+                      <li>
+                        <p>Header 5</p>
+                        <span>##### text</span>
+                      </li>
+                      <li>
+                        <p>Header 6</p>
+                        <span>###### text</span>
+                      </li>
+                      <li>
+                        <p>Bold</p>
+                        <span>**text**</span>
+                      </li>
+                      <li>
+                        <p>Italic</p>
+                        <span>*text*</span>
+                      </li>
+
+                      <li>
+                        <p>Strikethrough</p>
+                        <span>~~text~~</span>
+                      </li>
+                      <li>
+                        <p>Inline Code</p>
+                        <span>`text`</span>
+                      </li>
+                      <li>
+                        <p>Blockquote</p>
+                        <span>&rsaquo; text</span>
+                      </li>
+                      <li>
+                        <p>List</p>
+                        <span>- text</span>
+                      </li>
+                      <li>
+                        <p>Link</p>
+                        <span>[text](link)</span>
+                      </li>
+                      <li>
+                        <p>Image</p>
+                        <span>![alt text](url)</span>
+                      </li>
+                      <li>
+                        <p>Divide</p>
+                        <span>---</span>
+                      </li>
+                    </ul>
+                  </div>
                 </PopoverContent>
               </Popover>
             </div>
@@ -292,7 +357,7 @@ function PostForm() {
           </Tabs>
         </div>
 
-        <div className="flex gap-4 mt-10">
+        <div className="flex flex-col md:flex-row gap-4 mt-10">
           <Button
             type="button"
             variant="outline"

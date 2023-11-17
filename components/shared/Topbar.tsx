@@ -50,7 +50,26 @@ async function Topbar() {
           </div>
         )}
       </div>
-      <div className="md:hidden">
+      <div className="flex gap-4 md:hidden">
+        {session ? (
+          <ul className="flex gap-4 items-center justify-center">
+            {isAdmin && (
+              <li>
+                <Link href="/create-post">
+                  <Button>Create Post</Button>
+                </Link>
+              </li>
+            )}
+            <li className="flex items-center justify-center">
+              <UserButton session={session} />
+            </li>
+          </ul>
+        ) : (
+          <div>
+            <SignInButton />
+          </div>
+        )}
+
         <HamburgerMenu />
       </div>
     </header>

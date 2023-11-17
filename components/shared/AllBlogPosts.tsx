@@ -93,8 +93,8 @@ function BlogPage() {
                   <Image
                     src={imageUrls[index] || "/assets/icons/placeholder.svg"}
                     alt="Post Hero"
-                    width={200}
-                    height={200}
+                    width={100}
+                    height={100}
                     priority
                     className="object-cover w-full h-full rounded-t-lg object-center overflow-hidden"
                   />

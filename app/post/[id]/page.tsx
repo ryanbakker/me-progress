@@ -140,19 +140,7 @@ function Page({ params }: { params: { id: string } }) {
                     className="invert dark:invert-0"
                   />
                 </button>
-                <Link
-                  href={"/"}
-                  className="flex gap-2 items-center justify-center bg-slate-600 px-6 py-2 rounded-md hover:bg-slate-500 transition-all text-white dark:bg-slate-50 dark:text-slate-950 hover:dark:bg-slate-300"
-                >
-                  Edit
-                  <Image
-                    src="/assets/icons/edit.svg"
-                    alt="edit"
-                    height={15}
-                    width={15}
-                    className="invert dark:invert-0"
-                  />
-                </Link>
+
                 <button
                   className="flex gap-2 items-center justify-center bg-red-700 px-6 py-2 rounded-md text-white hover:bg-red-600 transition-all"
                   onClick={handleDelete}
@@ -203,7 +191,7 @@ function Page({ params }: { params: { id: string } }) {
               src={imageUrl}
               alt="Post Hero"
               width={700}
-              height={700}
+              height={600}
               priority
               className="object-fill w-full h-full  object-center overflow-hidden"
             />
@@ -240,19 +228,7 @@ function Page({ params }: { params: { id: string } }) {
                   className="invert dark:invert-0"
                 />
               </button>
-              <Link
-                href={`/post/${currentPost.id}/edit`}
-                className="flex gap-2 items-center justify-center bg-slate-600 px-6 py-2 rounded-md hover:bg-slate-500 transition-all text-white dark:bg-slate-50 dark:text-slate-950 hover:dark:bg-slate-300"
-              >
-                Edit
-                <Image
-                  src="/assets/icons/edit.svg"
-                  alt="edit"
-                  height={15}
-                  width={15}
-                  className="invert dark:invert-0"
-                />
-              </Link>
+
               <button
                 className="flex gap-2 items-center justify-center bg-red-700 px-6 py-2 rounded-md text-white hover:bg-red-600 transition-all"
                 onClick={handleDelete}

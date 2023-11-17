@@ -1,4 +1,3 @@
-import { db } from "@/firebase";
 import {
   getDocs,
   collection,
@@ -8,7 +7,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { Post, postConverter } from "../converters/Post";
-import { firestore } from "../../firebase";
+import { db } from "@/firebase";
 
 export async function getAllPosts(): Promise<Post[]> {
   const postsCollection = collection(db, "posts");
@@ -31,7 +30,7 @@ export async function getAllPosts(): Promise<Post[]> {
 }
 
 export async function getPostById(postId: string): Promise<Post | null> {
-  const postRef = doc(db, "posts", postId);
+  const postRef = doc(db, "posts", postId); // Use doc instead of collection
 
   try {
     const docSnapshot = await getDoc(postRef);

@@ -29,6 +29,7 @@ function NavMenu() {
                         <Link
                           href={link.route}
                           className="flex gap-3 items-start hover:bg-gray-100 hover:dark:bg-gray-900 p-3 rounded-md"
+                          target={link.target}
                         >
                           <Image
                             src={link.iconPath}
@@ -62,6 +63,7 @@ function NavMenu() {
                         <Link
                           href={link.route}
                           className="flex gap-3 items-start hover:bg-gray-100 hover:dark:bg-gray-900 p-3 rounded-md"
+                          target={link.target}
                         >
                           <Image
                             src={link.iconPath}
