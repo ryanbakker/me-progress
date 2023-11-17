@@ -75,6 +75,11 @@
   }
 }
 
+.blog-single-post .skeleton,
+.blog-all-posts .skeleton {
+  @apply bg-slate-400 dark:bg-slate-500;
+}
+
 .post-blog-form input {
   @apply ring-0 focus:ring-0  dark:border-0;
 }

@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { db } from "@/firebase";
 import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function Page({ params }: { params: { id: string } }) {
   const postId = params.id;
@@ -106,8 +107,89 @@ function Page({ params }: { params: { id: string } }) {
 
   if (!currentPost) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader />
+      <div className="blog-single-post flex flex-row flex-wrap mt-8 gap-6 w-full max-w-[90%] mx-auto bg-slate-100 dark:bg-slate-700 min-h-full rounded-t-2xl pb-10">
+        <div className="rounded-2xl w-screen flex flex-col object-center overflow-hidden h-full">
+          <div className="overflow-hidden w-full object-center flex justify-center items-center object-fill max-h-[30rem] ">
+            <div className="w-full h-[28rem] flex items-center justify-center">
+              <Loader />
+            </div>
+          </div>
+
+          <div className="p-14 flex flex-col gap-2 w-full flex-1 max-w-5xl lg:max-w-6xl mx-auto">
+            <div className="flex flex-wrap mb-6 gap-x-6">
+              <div>
+                <h2 className="text-4xl font-medium text-slate-950 dark:text-slate-50">
+                  <Skeleton className="skeleton h-11 w-[20rem]" />
+                </h2>
+
+                <p className="font-light text-xs mt-auto pt-4 text-gray-500 dark:text-gray-300 pb-10">
+                  <Skeleton className="skeleton h-4 w-[10rem]" />
+                </p>
+              </div>
+              <div className="gap-2 inline-flex lg:ml-auto items-start">
+                <button
+                  className="flex gap-2 items-center justify-center bg-slate-600 px-6 py-2 rounded-md hover:bg-slate-500 transition-all text-white dark:bg-slate-50 dark:text-slate-950 hover:dark:bg-slate-300"
+                  onClick={handleShareLink}
+                >
+                  Share
+                  <Image
+                    src="/assets/icons/share.svg"
+                    alt="edit"
+                    height={15}
+                    width={15}
+                    className="invert dark:invert-0"
+                  />
+                </button>
+                <Link
+                  href={"/"}
+                  className="flex gap-2 items-center justify-center bg-slate-600 px-6 py-2 rounded-md hover:bg-slate-500 transition-all text-white dark:bg-slate-50 dark:text-slate-950 hover:dark:bg-slate-300"
+                >
+                  Edit
+                  <Image
+                    src="/assets/icons/edit.svg"
+                    alt="edit"
+                    height={15}
+                    width={15}
+                    className="invert dark:invert-0"
+                  />
+                </Link>
+                <button
+                  className="flex gap-2 items-center justify-center bg-red-700 px-6 py-2 rounded-md text-white hover:bg-red-600 transition-all"
+                  onClick={handleDelete}
+                >
+                  Delete
+                  <Image
+                    src="/assets/icons/delete.svg"
+                    alt="edit"
+                    height={15}
+                    width={15}
+                    className="invert"
+                  />
+                </button>
+              </div>
+            </div>
+
+            <section className="blog-post-content">
+              <ul className="!list-none !pl-0 flex flex-col gap-4">
+                <li>
+                  <Skeleton className="skeleton h-8 w-[35rem]" />
+                </li>
+                <li>
+                  <Skeleton className="skeleton h-8 w-[35rem]" />
+                </li>
+                <li>
+                  <Skeleton className="skeleton h-8 w-[35rem]" />
+                </li>
+                <li>
+                  <Skeleton className="skeleton h-8 w-[28rem]" />
+                </li>
+                <li>
+                  <Skeleton className="skeleton h-8 w-[20rem]" />
+                </li>
+              </ul>
+            </section>
+          </div>
+        </div>
       </div>
     );
   }
@@ -144,7 +226,7 @@ function Page({ params }: { params: { id: string } }) {
                 {multiFormatDateString(currentPost.timestamp.toDateString())}
               </p>
             </div>
-            <div className="gap-2 inline-flex xl:ml-auto items-start">
+            <div className="gap-2 inline-flex lg:ml-auto items-start">
               <button
                 className="flex gap-2 items-center justify-center bg-slate-600 px-6 py-2 rounded-md hover:bg-slate-500 transition-all text-white dark:bg-slate-50 dark:text-slate-950 hover:dark:bg-slate-300"
                 onClick={handleShareLink}
