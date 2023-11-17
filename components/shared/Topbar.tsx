@@ -1,4 +1,3 @@
-import { authOptions } from "@/auth";
 import { getServerSession } from "next-auth";
 import DarkModeToggle from "./DarkModeToggle";
 import UserButton from "./UserButton";
@@ -6,6 +5,7 @@ import NavMenu from "./NavMenu";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import SignInButton from "./SignInButton";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 async function Topbar() {
   const session = await getServerSession(authOptions);
